@@ -419,7 +419,7 @@ body {
   pointer-events: none;
 }
 
-/* style date picker png */
+/* style date picker svg */
 .task-date-button {
   all: unset;
   cursor: pointer;
@@ -427,14 +427,24 @@ body {
   align-items: center;
 }
 
+    /* Mask-based SVG icon */
 .task-date-icon {
   width: 15px;
   height: 15px;
-  color: var(--text, black);
+
+  background-color: var(--text);
   opacity: 0.7;
+
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
 }
 
-.task-date-icon:hover {
+.task-date-button:hover .task-date-icon {
   opacity: 1;
 }
 
