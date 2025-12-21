@@ -8,6 +8,8 @@ Some days I think in dates.
 Some days I think in chaos.
 
 This app is for all three.
+<img width="2756" height="1808" alt="To-Do-List board" src="https://github.com/user-attachments/assets/4472e9a1-a0dc-4978-8076-2c14f99b0a79" />
+<img width="2756" height="1808" alt="To-Do-List calendar" src="https://github.com/user-attachments/assets/e1b00dd2-9587-4704-80ce-28e30b6ab57a" />
 
 ---
 
