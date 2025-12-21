@@ -131,7 +131,14 @@ export default function TaskCard({
               onClick={() => dateInputRef.current?.showPicker()}
               aria-label="Pick due date"
             >
-              <img src={calendarIcon} alt="" className="task-date-icon" />
+              <span
+                className="task-date-icon"
+                aria-hidden="true"
+                style={{
+                  WebkitMaskImage: `url(${calendarIcon})`,
+                  maskImage: `url(${calendarIcon})`,
+                }}
+              />
             </button>
 
             {/* Date text */}
