@@ -1,5 +1,5 @@
 import type { Task } from "../types/task";
-import { ReactComponent as CalendarIcon } from "../asset/calendar.svg";
+import calendarIcon from "../asset/calendar.svg";
 import { daysFromToday } from "../utils/date";
 import { useState, useRef, useEffect } from "react";
 import TaskMenu from "./TaskMenu";
@@ -131,7 +131,7 @@ export default function TaskCard({
               onClick={() => dateInputRef.current?.showPicker()}
               aria-label="Pick due date"
             >
-              <CalendarIcon className="task-date-icon" />
+              <img src={calendarIcon} alt="" className="task-date-icon" />
             </button>
 
             {/* Date text */}
