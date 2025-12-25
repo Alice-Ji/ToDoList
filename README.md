@@ -45,24 +45,28 @@ This app treats **aesthetics as a functional feature**, not decoration.
 
 ---
 
-## Planned feature
+## DIY Theme Editor
 
-### DIY Theme Editor
+A built-in theme editor that allows users to create and persist a fully custom theme.
 
-A future feature I want to implement:
-
-- Fully customizable themes
+- Fully customizable themes  
 - Control **everything**:
   - colors
   - fonts
   - spacing
   - borders
-- Inspired by:
-  - MySpace / Tumblr CSS
-  - AO3 skins
-- But designed to be **intuitive**, not raw CSS
+  - calendar-specific surfaces
+- Live preview in both board and calendar views
+- Section-level reset and JSON export
+
+Inspired by:
+- MySpace / Tumblr CSS
+- AO3 skins
+
+But designed to be **intuitive**, not raw CSS.
 
 Think expressive customization without breaking the app.
+
 
 ---
 
