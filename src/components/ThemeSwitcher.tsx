@@ -1,8 +1,23 @@
 import { useState, useRef, useEffect } from "react";
 import { useTheme } from "../hooks/useTheme";
 import { themes } from "../themes";
+import { customTheme } from "../themes/custom";
 
-export default function ThemeSwitcher() {
+type Props = {
+  onOpenCustomTheme: () => void;
+};
+
+const CUSTOM_KEY = "taskboard.customTheme";
+
+function loadCustomTheme() {
+  const saved = localStorage.getItem(CUSTOM_KEY);
+  return {
+    name: "Custom",
+    vars: saved ? JSON.parse(saved) : customTheme.vars,
+  };
+}
+
+export default function ThemeSwitcher({ onOpenCustomTheme }: Props) {
   const { currentTheme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -13,7 +28,6 @@ export default function ThemeSwitcher() {
 
     function handleClickOutside(e: MouseEvent) {
       const target = e.target as Node;
-
       if (
         panelRef.current &&
         !panelRef.current.contains(target) &&
@@ -25,14 +39,13 @@ export default function ThemeSwitcher() {
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
+
+  const custom = loadCustomTheme();
 
   return (
     <>
-      {/* Floating button */}
       <button
         ref={buttonRef}
         className="theme-switcher-button"
@@ -42,9 +55,9 @@ export default function ThemeSwitcher() {
         🎨
       </button>
 
-      {/* Panel */}
       {open && (
         <div ref={panelRef} className="theme-switcher-panel">
+          {/* Preset themes */}
           {themes.map((theme) => (
             <button
               key={theme.name}
@@ -62,22 +75,63 @@ export default function ThemeSwitcher() {
             >
               <div
                 className="theme-option-card"
-                style={{
-                  background: theme.vars["--card"],
-                }}
+                style={{ background: theme.vars["--card"] }}
               >
                 <div className="theme-option-title">{theme.name}</div>
                 <div className="theme-option-preview">
                   <div
                     className="theme-option-accent"
-                    style={{
-                      background: theme.vars["--accent"],
-                    }}
+                    style={{ background: theme.vars["--accent"] }}
                   />
                 </div>
               </div>
             </button>
           ))}
+
+          {/* Custom theme — ONE card */}
+          <button
+            className={`theme-option ${
+              currentTheme.name === "Custom" ? "selected" : ""
+            }`}
+            onClick={() => {
+              setTheme(custom); // apply custom
+              setOpen(false);
+            }}
+            style={{
+              color: custom.vars["--text"],
+              fontFamily: custom.vars["--font-body"],
+            }}
+          >
+            <div
+              className="theme-option-card"
+              style={{ background: custom.vars["--card"] }}
+            >
+              <div className="theme-option-title">
+                <span>Custom</span>
+
+                {/* ✎ Edit CTA */}
+                <button
+                  className="theme-option-edit"
+                  onClick={(e) => {
+                    e.stopPropagation(); // 🔑 prevent applying theme
+                    setTheme(custom);
+                    onOpenCustomTheme();
+                    setOpen(false);
+                  }}
+                  aria-label="Edit custom theme"
+                >
+                  ✎
+                </button>
+              </div>
+
+              <div className="theme-option-preview">
+                <div
+                  className="theme-option-accent"
+                  style={{ background: custom.vars["--accent"] }}
+                />
+              </div>
+            </div>
+          </button>
         </div>
       )}
     </>
