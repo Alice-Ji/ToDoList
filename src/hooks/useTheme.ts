@@ -3,21 +3,26 @@ import { useLocalStorage } from "./useLocalStorage";
 import type { Theme } from "../types/theme";
 import { defaultTheme } from "../themes/default";
 
-export function useTheme() {
-  const [theme, setThemeState] = useLocalStorage<Theme>(
-    "taskboard.theme",
-    defaultTheme
-  );
+const ACTIVE_KEY = "taskboard.activeTheme";
+const CUSTOM_KEY = "taskboard.customTheme";
 
+export function useTheme() {
+  // Active theme (preset OR custom)
+  const [theme, setTheme] = useLocalStorage<Theme>(ACTIVE_KEY, defaultTheme);
+
+  // Apply CSS vars
   useEffect(() => {
     Object.entries(theme.vars).forEach(([key, value]) => {
       document.documentElement.style.setProperty(key, value);
     });
   }, [theme]);
 
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-  };
+  // Persist custom ONLY when editing Custom
+  useEffect(() => {
+    if (theme.name === "Custom") {
+      localStorage.setItem(CUSTOM_KEY, JSON.stringify(theme.vars));
+    }
+  }, [theme]);
 
   return {
     currentTheme: theme,
