@@ -2,9 +2,15 @@ import { useState } from "react";
 import BoardView from "./components/BoardView";
 import CalendarView from "./components/CalendarView";
 import ThemeSwitcher from "./components/ThemeSwitcher";
+import CustomTheme from "./components/CustomTheme";
 
 export default function App() {
   const [view, setView] = useState<"board" | "calendar">("board");
+  const [screen, setScreen] = useState<"app" | "customTheme">("app");
+
+  if (screen === "customTheme") {
+    return <CustomTheme onClose={() => setScreen("app")} />;
+  }
 
   return (
     <div className="app-root">
@@ -21,7 +27,7 @@ export default function App() {
         {view === "board" ? <BoardView /> : <CalendarView />}
       </main>
 
-      <ThemeSwitcher />
+      <ThemeSwitcher onOpenCustomTheme={() => setScreen("customTheme")} />
     </div>
   );
 }
