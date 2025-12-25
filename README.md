@@ -85,5 +85,6 @@ It assumes:
 - productivity is emotional
 - tools should adapt to mental state
 - visual design can reduce friction or increase momentum
+  
 Yes, the app is literally called **To Do List.**  
 With the period.
